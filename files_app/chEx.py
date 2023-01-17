@@ -59,8 +59,10 @@ def confirmGenerateCSVAndExcel():
 def convertCSV(file_extract_path, file_extract):
     new_csv = pd.read_csv(
         file_extract_path,
+        sep=';',
         usecols=["DATA", "TIPO", "DESCRICAO", "VALOR"]
         )
+    new_csv["VALOR"]=new_csv["VALOR"].str.replace(',','.')
     new_csv = new_csv[new_csv["TIPO"].str.contains("Pix Recebido")]
     new_csv.to_csv("Extrato_CSV/{}".format(file_extract), index=False, header=True)
     new_csv = pd.read_csv(file_extract_path, usecols=["DATA", "DESCRICAO", "VALOR"])
